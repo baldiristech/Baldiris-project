@@ -354,7 +354,7 @@ function bodyFrom(req) {
 }
 
 function serveStatic(req, res) {
-  const requested = decodeURIComponent(req.url.split('?')[0]);
+  const requested = decodeURIComponent((req.url || '').split('?')[0]);
   const relative = requested === '/' ? '/index.html' : requested;
   const target = path.normalize(path.join(publicDir, relative));
   const rootPrefix = publicDir.endsWith(path.sep) ? publicDir : publicDir + path.sep;
@@ -362,7 +362,8 @@ function serveStatic(req, res) {
   const file = target.startsWith(rootPrefix) && fs.existsSync(target) ? target : rootImage;
   const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.jpeg': 'image/jpeg', '.jpg': 'image/jpeg', '.png': 'image/png', '.json': 'application/json' };
   if (!file.startsWith(root) || !fs.existsSync(file) || !fs.statSync(file).isFile()) {
-    res.writeHead(404); return res.end('No encontrado');
+    res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
+    return res.end(JSON.stringify({ error: 'No encontrado' }));
   }
   res.writeHead(200, { 'Content-Type': types[path.extname(file).toLowerCase()] || 'application/octet-stream' });
   fs.createReadStream(file).pipe(res);
@@ -380,7 +381,8 @@ const server = http.createServer(async (req, res) => {
       return res.end();
     }
     const requested = decodeURIComponent((req.url || '').split('?')[0]);
-    const businessApi = requested === '/api/business' && (req.method === 'GET' || req.method === 'PATCH');
+    const normalizedRequested = requested === '/api/orders/' ? '/api/orders' : requested;
+    const businessApi = normalizedRequested === '/api/business' && (req.method === 'GET' || req.method === 'PATCH');
     const business = readBusinessState();
     if (business.active === false && !businessApi) {
       res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
@@ -397,11 +399,11 @@ const server = http.createServer(async (req, res) => {
       || (req.url === '/api/pqrs' && req.method === 'GET')
       || /^\/api\/(menu|pqrs|inventory|expenses)\/[^/]+/.test(req.url)
       || usersWrite;
-    if ((req.url === '/reportes.html' || adminApi) && !reportAuthorized(req, res)) return;
-    if (requested === '/api/business' && req.method === 'GET') {
+    if ((requested === '/reportes.html' || adminApi) && !reportAuthorized(req, res)) return;
+    if (normalizedRequested === '/api/business' && req.method === 'GET') {
       return sendJson(res, 200, readBusinessState());
     }
-    if (requested === '/api/business' && req.method === 'PATCH') {
+    if (normalizedRequested === '/api/business' && req.method === 'PATCH') {
       const data = await bodyFrom(req);
       const active = typeof data.active === 'boolean' ? data.active : Boolean(data.active);
       const business = readBusinessState();
@@ -409,10 +411,10 @@ const server = http.createServer(async (req, res) => {
       saveBusinessState(business);
       return sendJson(res, 200, business);
     }
-    if (req.url === '/api/users' && req.method === 'GET') {
+    if (normalizedRequested === '/api/users' && req.method === 'GET') {
       return sendJson(res, 200, readJsonFile(usersFile));
     }
-    if (req.url === '/api/users' && req.method === 'POST') {
+    if (normalizedRequested === '/api/users' && req.method === 'POST') {
       const data = await bodyFrom(req);
       const name = String(data.name || '').trim();
       const email = String(data.email || '').trim();
@@ -428,7 +430,7 @@ const server = http.createServer(async (req, res) => {
       saveJsonFile(usersFile, users);
       return sendJson(res, 201, user);
     }
-    const usersMatch = req.url.match(/^\/api\/users\/([^/]+)$/);
+    const usersMatch = normalizedRequested.match(/^\/api\/users\/([^/]+)$/);
     if (usersMatch && req.method === 'PATCH') {
       const data = await bodyFrom(req);
       const users = readJsonFile(usersFile);
@@ -458,29 +460,29 @@ const server = http.createServer(async (req, res) => {
       });
       return res.end(csv);
     }
-    if (req.url === '/api/report-orders' && req.method === 'GET') {
+    if (normalizedRequested === '/api/report-orders' && req.method === 'GET') {
       return sendJson(res, 200, await getOrders());
     }
-    if (requested === '/api/report-summary' && req.method === 'GET') {
+    if (normalizedRequested === '/api/report-summary' && req.method === 'GET') {
       const month = getMonthFromQuery(req.url);
       return sendJson(res, 200, calculateReportSummary(month || new Date().toISOString().slice(0, 7)));
     }
-    if (req.url === '/api/orders' && req.method === 'GET') {
+    if (normalizedRequested === '/api/orders' && req.method === 'GET') {
       return sendJson(res, 200, await getOrders());
     }
-    if (req.url === '/api/kitchen' && req.method === 'GET') {
+    if (normalizedRequested === '/api/kitchen' && req.method === 'GET') {
       return sendJson(res, 200, getKitchenState());
     }
-    if (req.url === '/api/kitchen' && req.method === 'PATCH') {
+    if (normalizedRequested === '/api/kitchen' && req.method === 'PATCH') {
       const data = await bodyFrom(req);
       const state = { open: data.open !== false };
       saveKitchenState(state);
       return sendJson(res, 200, state);
     }
-    if (req.url === '/api/inventory' && req.method === 'GET') {
+    if (normalizedRequested === '/api/inventory' && req.method === 'GET') {
       return sendJson(res, 200, readJsonFile(inventoryFile));
     }
-    if (req.url === '/api/inventory' && req.method === 'POST') {
+    if (normalizedRequested === '/api/inventory' && req.method === 'POST') {
       const data = await bodyFrom(req);
       const name = String(data.name || '').trim();
       const unit = String(data.unit || '').trim();
@@ -495,7 +497,7 @@ const server = http.createServer(async (req, res) => {
       saveJsonFile(inventoryFile, inventory);
       return sendJson(res, 201, item);
     }
-    const inventoryMatch = req.url.match(/^\/api\/inventory\/([^/]+)$/);
+    const inventoryMatch = normalizedRequested.match(/^\/api\/inventory\/([^/]+)$/);
     if (inventoryMatch && req.method === 'PATCH') {
       const data = await bodyFrom(req);
       const inventory = readJsonFile(inventoryFile);
@@ -512,10 +514,10 @@ const server = http.createServer(async (req, res) => {
       saveJsonFile(inventoryFile, remaining);
       return sendJson(res, 200, { ok: true });
     }
-    if (req.url === '/api/expenses' && req.method === 'GET') {
+    if (normalizedRequested === '/api/expenses' && req.method === 'GET') {
       return sendJson(res, 200, readJsonFile(expensesFile));
     }
-    if (req.url === '/api/expenses' && req.method === 'POST') {
+    if (normalizedRequested === '/api/expenses' && req.method === 'POST') {
       const data = await bodyFrom(req);
       const concept = String(data.concept || '').trim();
       const category = String(data.category || '').trim();
@@ -530,7 +532,7 @@ const server = http.createServer(async (req, res) => {
       saveJsonFile(expensesFile, expenses);
       return sendJson(res, 201, item);
     }
-    const expenseMatch = req.url.match(/^\/api\/expenses\/([^/]+)$/);
+    const expenseMatch = normalizedRequested.match(/^\/api\/expenses\/([^/]+)$/);
     if (expenseMatch && req.method === 'PATCH') {
       const data = await bodyFrom(req);
       const expenses = readJsonFile(expensesFile);
@@ -547,16 +549,16 @@ const server = http.createServer(async (req, res) => {
       saveJsonFile(expensesFile, remaining);
       return sendJson(res, 200, { ok: true });
     }
-    if (req.url === '/api/menu' && req.method === 'GET') {
+    if (normalizedRequested === '/api/menu' && req.method === 'GET') {
       return sendJson(res, 200, await getMenu());
     }
-    if (req.url === '/api/menu' && req.method === 'POST') {
+    if (normalizedRequested === '/api/menu' && req.method === 'POST') {
       const data = await bodyFrom(req);
       if (!data.name || !data.category || Number(data.price) < 0) return sendJson(res, 400, { error: 'Nombre, categoría y precio son obligatorios' });
       const item = { id: crypto.randomUUID(), category: String(data.category).trim(), name: String(data.name).trim(), description: String(data.description || '').trim(), price: Number(data.price), image: String(data.image || '').trim(), visual: String(data.visual || '').trim() };
       return sendJson(res, 201, await createMenuItem(item));
     }
-    const menuMatch = req.url.match(/^\/api\/menu\/([^/]+)$/);
+    const menuMatch = normalizedRequested.match(/^\/api\/menu\/([^/]+)$/);
     if (menuMatch && req.method === 'PATCH') {
       const data = await bodyFrom(req);
       const item = await updateMenuItem(menuMatch[1], { category: String(data.category || '').trim(), name: String(data.name || '').trim(), description: String(data.description || '').trim(), price: Number(data.price) || 0, image: String(data.image || '').trim(), visual: String(data.visual || '').trim() });
@@ -567,23 +569,23 @@ const server = http.createServer(async (req, res) => {
       if (!await deleteMenuItem(menuMatch[1])) return sendJson(res, 404, { error: 'Plato no encontrado' });
       return sendJson(res, 200, { ok: true });
     }
-    if (req.url === '/api/pqrs' && req.method === 'GET') {
+    if (normalizedRequested === '/api/pqrs' && req.method === 'GET') {
       return sendJson(res, 200, await getPqrs());
     }
-    if (req.url === '/api/pqrs' && req.method === 'POST') {
+    if (normalizedRequested === '/api/pqrs' && req.method === 'POST') {
       const data = await bodyFrom(req);
       if (!data.message) return sendJson(res, 400, { error: 'El mensaje es obligatorio' });
       const pqr = { id: crypto.randomUUID(), name: String(data.name || '').trim(), phone: String(data.phone || '').trim(), type: ['queja', 'reclamo', 'sugerencia', 'felicitacion'].includes(data.type) ? data.type : 'sugerencia', message: String(data.message).trim(), status: 'new', createdAt: new Date().toISOString() };
       return sendJson(res, 201, await createPqr(pqr));
     }
-    const pqrMatch = req.url.match(/^\/api\/pqrs\/([^/]+)\/status$/);
+    const pqrMatch = normalizedRequested.match(/^\/api\/pqrs\/([^/]+)\/status$/);
     if (pqrMatch && req.method === 'PATCH') {
       const data = await bodyFrom(req);
       const pqr = await updatePqr(pqrMatch[1], ['new', 'reviewed', 'resolved'].includes(data.status) ? data.status : 'reviewed');
       if (!pqr) return sendJson(res, 404, { error: 'PQR no encontrada' });
       return sendJson(res, 200, pqr);
     }
-    if (req.url === '/api/orders' && req.method === 'POST') {
+    if (normalizedRequested === '/api/orders' && req.method === 'POST') {
       const data = await bodyFrom(req);
       if (!getKitchenState().open) return sendJson(res, 409, { error: 'La cocina está cerrada y no recibe pedidos en este momento' });
       const deliveryType = data.deliveryType === 'domicilio' ? 'domicilio' : 'mesa';
@@ -609,7 +611,7 @@ const server = http.createServer(async (req, res) => {
       };
       return sendJson(res, 201, await createOrder(order));
     }
-    const statusMatch = req.url.match(/^\/api\/orders\/([^/]+)\/status$/);
+    const statusMatch = normalizedRequested.match(/^\/api\/orders\/([^/]+)\/status$/);
     if (statusMatch && req.method === 'PATCH') {
       const data = await bodyFrom(req);
       const validStatuses = ['new', 'pending', 'preparing', 'ready', 'delivered', 'cancelled'];
@@ -618,7 +620,7 @@ const server = http.createServer(async (req, res) => {
       if (!order) return sendJson(res, 404, { error: 'Pedido no encontrado' });
       return sendJson(res, 200, order);
     }
-    const deleteMatch = req.url.match(/^\/api\/orders\/([^/]+)$/);
+    const deleteMatch = normalizedRequested.match(/^\/api\/orders\/([^/]+)$/);
     if (deleteMatch && req.method === 'DELETE') {
       const deleted = await deleteOrder(deleteMatch[1]);
       if (!deleted) return sendJson(res, 404, { error: 'Pedido no encontrado' });
