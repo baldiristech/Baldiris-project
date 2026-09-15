@@ -1,0 +1,15 @@
+[
+  {
+    "id": "MOV-1",
+    "concept": "Pago mensual inicial",
+    "type": "income",
+    "category": "Ingresos",
+    "method": "transferencia",
+    "amount": 2500000,
+    "date": "2026-09-14",
+    "status": "Pagado",
+    "project": "Sistema POS",
+    "business": "K.E. Chicharrón",
+    "responsible": "Andrés García"
+  }
+]

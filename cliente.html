@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>K.E. Chicharrón | Menú</title>
+  <link rel="stylesheet" href="cliente-styles.css">
+</head>
+<body>
+  <header class="client-header"><div class="restaurant-brand"><span class="restaurant-logo">K</span><div><strong>K.E. Chicharrón</strong><small>El sabor de la casa</small></div></div><button class="cart-button" id="open-cart">Carrito <b id="cart-count">0</b></button></header>
+  <main class="client-main"><section class="client-hero"><p>BIENVENIDO</p><h1>Comida con carácter.</h1><span>Haz tu pedido y disfruta el sabor de K.E. Chicharrón.</span></section><div class="client-toolbar"><div><h2>Menú</h2><p>Selecciona tus favoritos</p></div><div id="categories" class="categories"></div></div><section id="menu-grid" class="menu-grid"></section></main>
+  <aside id="cart-drawer" class="cart-drawer"><div class="drawer-head"><h2>Tu pedido</h2><button id="close-cart" aria-label="Cerrar carrito">×</button></div><div id="cart-items" class="cart-items"></div><div class="drawer-total"><span>Total</span><strong id="cart-total">$0</strong></div><button id="checkout" class="checkout-button">Confirmar pedido</button></aside><div id="toast" class="toast"></div>
+  <script src="cliente-app.js"></script>
+</body>
+</html>

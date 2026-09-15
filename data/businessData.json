@@ -1,0 +1,59 @@
+{
+  "1": {
+    "name": "K.E. Chicharrón",
+    "city": "Bogotá",
+    "client": "K.E. Chicharrón",
+    "project": "Sistema POS",
+    "active": true,
+    "products": [
+      {
+        "name": "Patacón relleno",
+        "category": "Favoritos",
+        "price": 20000,
+        "description": "Pollo, cerdo, butifarra, mozzarella, maíz y salsas.",
+        "image": "patacon relleno .jpg",
+        "available": true
+      },
+      {
+        "name": "Chicharrón personal",
+        "category": "Chicharrones",
+        "price": 17000,
+        "description": "Con yuca o patacones y suero.",
+        "image": "chicharron de 17mil.jpg",
+        "available": true
+      },
+      {
+        "name": "Chicharrón doble",
+        "category": "Chicharrones",
+        "price": 30000,
+        "description": "Una porción generosa para compartir.",
+        "image": "chicharron doble.jpg",
+        "available": true
+      },
+      {
+        "name": "Chuletazo",
+        "category": "Asados",
+        "price": 20000,
+        "description": "Acompañado con patacones y ensalada.",
+        "image": "chuletazo.jpg",
+        "available": true
+      },
+      {
+        "name": "Pechuga gratinada",
+        "category": "Asados",
+        "price": 25000,
+        "description": "Pechuga gratinada con papas o patacones y ensalada.",
+        "image": "pechuga gratinada.jpg",
+        "available": true
+      },
+      {
+        "name": "Sopa del día",
+        "category": "Platos fuertes",
+        "price": 12000,
+        "description": "Producto temporal no disponible.",
+        "image": "",
+        "available": false
+      }
+    ]
+  }
+}

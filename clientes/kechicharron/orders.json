@@ -1,0 +1,37 @@
+[
+  {
+    "id": "f7b81deb-d523-4aef-86a4-da0476540747",
+    "table": "4",
+    "note": "",
+    "items": [
+      {
+        "id": "0d6e0178-d5a0-40c0-a577-cc7153f62132",
+        "category": "Favoritos",
+        "name": "Patacón relleno",
+        "description": "Pollo, cerdo, butifarra, mozzarella, maíz y salsas.",
+        "price": 20000,
+        "image": "patacon relleno .jpg",
+        "visual": "",
+        "quantity": 1
+      },
+      {
+        "id": "d608c92b-d3dc-4efa-afb0-858242a656e1",
+        "category": "Chicharrones",
+        "name": "Chicharrón personal",
+        "description": "Con yuca o patacones y suero.",
+        "price": 17000,
+        "image": "chicharron de 17mil.jpg",
+        "visual": "",
+        "quantity": 1
+      }
+    ],
+    "total": 37000,
+    "status": "cancelled",
+    "createdAt": "2026-09-14T14:41:38.229Z",
+    "deliveryType": "mesa",
+    "paymentMethod": "efectivo",
+    "address": "",
+    "phone": "",
+    "readyAt": null
+  }
+]

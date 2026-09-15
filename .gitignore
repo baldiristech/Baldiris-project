@@ -1,0 +1,15 @@
+# Secretos locales: nunca se suben al repositorio.
+.env
+.env.*
+!.env.example
+
+# Registros y archivos generados localmente.
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos del sistema y del editor.
+.DS_Store
+Thumbs.db
+.vscode/

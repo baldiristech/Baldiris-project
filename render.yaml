@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: kechicharron-qr
+    runtime: node
+    rootDir: clientes/kechicharron
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: BALDIRIS_ADMIN_EMAIL
+        sync: false
+      - key: BALDIRIS_ADMIN_PASSWORD
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: REPORT_USER
+        sync: false
+      - key: REPORT_PASSWORD
+        sync: false

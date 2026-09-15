@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BALDIRIS, plataforma empresarial multi-negocio">
+  <title>BALDIRIS | Plataforma empresarial</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="login-screen" class="login-screen">
+    <div class="login-art">
+      <div class="brand-mark large">B</div>
+      <p class="eyebrow">PLATAFORMA EMPRESARIAL</p>
+      <h1>Una capa central para hacer crecer cada negocio.</h1>
+      <p class="login-copy">Administra las operaciones de BALDIRIS y sus negocios desde un solo lugar, con una arquitectura preparada para escalar.</p>
+      <div class="login-foot"><span class="status-dot"></span> Sistema operativo · Versión 1.0</div>
+    </div>
+    <form id="login-form" class="login-card">
+      <div class="brand-line"><span class="brand-mark">B</span><strong>BALDIRIS</strong></div>
+      <p class="eyebrow">ACCESO SEGURO</p>
+      <h2>Bienvenido de nuevo</h2>
+      <p class="muted">Ingresa a tu espacio de administración.</p>
+      <label for="email">Correo electrónico</label>
+      <input id="email" type="email" placeholder="admin@tu-empresa.com" required>
+      <label for="password">Contraseña</label>
+      <input id="password" type="password" placeholder="Tu contraseña segura" required>
+      <div id="login-error" class="form-error" role="alert"></div>
+      <button class="primary-button full" type="submit">Entrar al panel <span>→</span></button>
+      <small>Las credenciales se configuran desde Render y no se guardan en el repositorio.</small>
+    </form>
+  </div>
+
+  <div id="app-shell" class="app-shell hidden">
+    <aside class="sidebar">
+      <div class="sidebar-head"><div class="brand-mark">B</div><strong>BALDIRIS</strong><button id="close-sidebar" class="icon-button mobile-only" aria-label="Cerrar menú">×</button></div>
+      <div class="workspace-switcher"><span class="workspace-icon">B</span><span><small>ESPACIO ACTIVO</small><strong>BALDIRIS central</strong></span><span class="chevron">⌄</span></div>
+      <nav aria-label="Navegación principal">
+        <p class="nav-label">VISTA GENERAL</p>
+        <button class="nav-item active" data-view="dashboard"><span>◈</span> Dashboard</button>
+        <p class="nav-label">ADMINISTRACIÓN</p>
+        <button class="nav-item" data-view="finanzas"><span>↗</span> Finanzas</button>
+        <button class="nav-item nav-subitem" data-view="ingresos"><span>+</span> Ingresos</button>
+        <button class="nav-item nav-subitem" data-view="gastos"><span>−</span> Gastos</button>
+        <button class="nav-item nav-subitem" data-view="reservas"><span>◇</span> Reservas</button>
+        <button class="nav-item nav-subitem" data-view="utilidades"><span>✦</span> Utilidades</button>
+        <button class="nav-item nav-subitem" data-view="pagos"><span>↔</span> Pagos</button>
+        <button class="nav-item" data-view="clientes"><span>♧</span> Clientes</button>
+        <button class="nav-item" data-view="proyectos"><span>▣</span> Proyectos</button>
+        <button class="nav-item" data-view="equipo"><span>♙</span> Colaboradores</button>
+        <button class="nav-item" data-view="usuarios"><span>♙</span> Usuarios y roles</button>
+        <button class="nav-item" data-view="reportes"><span>▤</span> Reportes</button>
+        <p class="nav-label">NEGOCIOS</p>
+        <button class="nav-item" data-view="negocios"><span>⌂</span> Mis negocios <b class="nav-count">1</b></button>
+        <button class="nav-item" data-view="pos"><span>▦</span> BALDIRIS POS</button>
+        <button class="nav-item nav-subitem" data-view="menu"><span>☷</span> Menú POS</button>
+        <button class="nav-item nav-subitem" data-view="productos"><span>◈</span> Productos</button>
+        <button class="nav-item nav-subitem" data-view="pedidos"><span>▤</span> Pedidos</button>
+        <button class="nav-item nav-subitem" data-view="cocina"><span>♨</span> Cocina</button>
+      </nav>
+      <div class="sidebar-bottom"><button class="nav-item" data-view="configuracion"><span>⚙</span> Configuración</button><div class="user-mini"><span class="avatar">AG</span><span><strong>Andrés García</strong><small>Super Admin</small></span><button id="logout" class="logout" aria-label="Cerrar sesión">↪</button></div></div>
+    </aside>
+    <main class="main-content">
+      <header class="topbar"><button id="open-sidebar" class="icon-button mobile-only" aria-label="Abrir menú">☰</button><div class="breadcrumb"><span>BALDIRIS</span><b>/</b><strong id="breadcrumb-current">Dashboard</strong></div><div class="top-actions"><button class="icon-button" title="Notificaciones" aria-label="Notificaciones">♢<i></i></button><button class="help-button">?</button><span class="avatar">AG</span></div></header>
+      <div id="view-container"></div>
+    </main>
+  </div>
+  <div id="business-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="business-modal-title">
+    <form id="business-form" class="modal-card">
+      <div class="modal-head"><div><p class="eyebrow">NUEVO TENANT</p><h2 id="business-modal-title">Crear negocio</h2></div><button type="button" id="close-business-modal" class="icon-button" aria-label="Cerrar">×</button></div>
+      <p class="muted">Cada negocio tendrá sus propios usuarios, productos, pedidos y reportes.</p>
+      <label for="business-name">Nombre del negocio</label>
+      <input id="business-name" required placeholder="Ej. Restaurante Central">
+      <label for="business-city">Ciudad</label>
+      <input id="business-city" required placeholder="Ej. Bogotá">
+      <label for="business-admin">Administrador asignado</label>
+      <select id="business-admin"><option>Laura Méndez</option><option>Camila Torres</option><option>Sin asignar</option></select>
+      <div class="modal-actions"><button type="button" id="cancel-business" class="secondary-button">Cancelar</button><button class="primary-button" type="submit">Crear negocio</button></div>
+    </form>
+  </div>
+
+  <div id="movement-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="movement-modal-title">
+    <form id="movement-form" class="modal-card">
+      <div class="modal-head"><div><p class="eyebrow">BALDIRIS / FINANZAS</p><h2 id="movement-modal-title">Registrar movimiento</h2></div><button type="button" id="close-movement-modal" class="icon-button" aria-label="Cerrar">×</button></div>
+      <div id="movement-error" class="form-error"></div>
+      <label for="movement-type">Tipo</label>
+      <select id="movement-type" required>
+        <option value="income">Ingreso</option>
+        <option value="expense">Gasto</option>
+        <option value="reserve">Reserva</option>
+        <option value="utility">Utilidad</option>
+        <option value="payment">Pago</option>
+      </select>
+      <label for="movement-concept">Concepto</label>
+      <input id="movement-concept" required placeholder="Ej. Pago mensual">
+      <label for="movement-category">Categoría</label>
+      <input id="movement-category" placeholder="Ej. Operación">
+      <label for="movement-method">Método</label>
+      <select id="movement-method" required><option value="efectivo">Efectivo</option><option value="transferencia">Transferencia</option><option value="nequi">Nequi</option><option value="daviplata">Daviplata</option></select>
+      <label for="movement-project">Proyecto</label>
+      <input id="movement-project" value="Sistema POS">
+      <label for="movement-business">Negocio</label>
+      <select id="movement-business">
+        <option value="BALDIRIS">BALDIRIS</option>
+        <option value="K.E. Chicharrón">K.E. Chicharrón</option>
+      </select>
+      <label for="movement-responsible">Responsable</label>
+      <input id="movement-responsible" placeholder="Ej. Laura">
+      <label for="movement-date">Fecha</label>
+      <input id="movement-date" type="date" required>
+      <label for="movement-amount">Valor</label>
+      <input id="movement-amount" type="number" min="0" required>
+      <label for="movement-status">Estado</label>
+      <select id="movement-status">
+        <option value="Pagado">Pagado</option>
+        <option value="Pendiente">Pendiente</option>
+        <option value="Reservado">Reservado</option>
+      </select>
+      <div class="modal-actions"><button type="button" id="cancel-movement" class="secondary-button">Cancelar</button><button class="primary-button" type="submit">Guardar movimiento</button></div>
+    </form>
+  </div>
+
+  <div id="client-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="client-modal-title">
+    <form id="client-form" class="modal-card">
+      <div class="modal-head"><div><p class="eyebrow">BALDIRIS / CLIENTES</p><h2 id="client-modal-title">Nuevo cliente</h2></div><button type="button" id="close-client-modal" class="icon-button" aria-label="Cerrar">×</button></div>
+      <label for="client-name">Nombre del cliente</label>
+      <input id="client-name" required placeholder="Ej. Restaurante Central">
+      <label for="client-contact">Contacto</label>
+      <input id="client-contact" required placeholder="correo@cliente.com">
+      <label for="client-project">Proyecto</label>
+      <input id="client-project" placeholder="Ej. Sistema POS">
+      <label for="client-income">Ingresos generados</label>
+      <input id="client-income" type="number" min="0" value="0">
+      <label for="client-status">Estado</label>
+      <select id="client-status"><option value="Activo">Activo</option><option value="Pendiente">Pendiente</option></select>
+      <div class="modal-actions"><button type="button" id="cancel-client" class="secondary-button">Cancelar</button><button class="primary-button" type="submit">Guardar cliente</button></div>
+    </form>
+  </div>
+
+  <div id="collaborator-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="collaborator-modal-title">
+    <form id="collaborator-form" class="modal-card">
+      <div class="modal-head"><div><p class="eyebrow">BALDIRIS / EQUIPO</p><h2 id="collaborator-modal-title">Invitar colaborador</h2></div><button type="button" id="close-collaborator-modal" class="icon-button" aria-label="Cerrar">×</button></div>
+      <label for="collaborator-name">Nombre</label>
+      <input id="collaborator-name" required placeholder="Ej. Ana López">
+      <label for="collaborator-email">Correo</label>
+      <input id="collaborator-email" type="email" required placeholder="ana@baldiris.com">
+      <label for="collaborator-role">Rol</label>
+      <input id="collaborator-role" required placeholder="Ej. Desarrollo">
+      <label for="collaborator-project">Proyecto</label>
+      <input id="collaborator-project" required placeholder="Ej. Sistema POS">
+      <label for="collaborator-payment">Forma de pago</label>
+      <select id="collaborator-payment">
+        <option>Mensual</option>
+        <option>Por proyecto</option>
+        <option>Honorarios</option>
+      </select>
+      <label for="collaborator-status">Estado</label>
+      <select id="collaborator-status"><option value="Activo">Activo</option><option value="Pendiente">Pendiente</option></select>
+      <div class="modal-actions"><button type="button" id="cancel-collaborator" class="secondary-button">Cancelar</button><button class="primary-button" type="submit">Guardar colaborador</button></div>
+    </form>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

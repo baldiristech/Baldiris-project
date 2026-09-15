@@ -1,0 +1,83 @@
+{
+  "platform": "BALDIRIS",
+  "company": "BALDIRIS",
+  "tenantMode": "multiBusiness",
+  "identity": {
+    "companyName": "BALDIRIS",
+    "admin": "Andrés García",
+    "commercialRole": "Negociaciones y cierre de proyecto",
+    "businessRole": "Administrador de negocio",
+    "kitchenRole": "Cocina",
+    "employeeRole": "Empleado"
+  },
+  "project": {
+    "projectId": "project-0001",
+    "projectName": "K.E. Chicharrón",
+    "client": {
+      "clientId": "client-0001",
+      "clientName": "K.E. Chicharrón",
+      "businessId": 1,
+      "businessName": "K.E. Chicharrón",
+      "city": "Bogotá",
+      "projectType": "Sistema POS"
+    },
+    "business": {
+      "businessId": 1,
+      "name": "K.E. Chicharrón",
+      "active": true,
+      "route": "http://localhost:3000",
+      "publicMenu": "/",
+      "kitchen": "/cocina.html",
+      "reports": "/reportes.html",
+      "routesProtectedBy": "Basic Auth: REPORT_USER / REPORT_PASSWORD"
+    }
+  },
+  "roles": [
+    {
+      "role": "Super Admin",
+      "description": "Control total de BALDIRIS, proyectos, clientes, negocios y reportes.",
+      "businessIds": ["*"]
+    },
+    {
+      "role": "Negociación y cierre",
+      "description": "Se encarga de cerrar ventas, negociar clientes y abrir el proyecto.",
+      "businessIds": ["*"]
+    },
+    {
+      "role": "Administrador de negocio",
+      "description": "Administra el negocio asignado y sus inventarios, costos y reportes.",
+      "businessIds": [1]
+    },
+    {
+      "role": "Cocina",
+      "description": "Controla cocina y pedidos en el negocio asignado.",
+      "businessIds": [1]
+    },
+    {
+      "role": "Empleado",
+      "description": "Acceso mínimo definido por negocio y rol.",
+      "businessIds": [1]
+    }
+  ],
+  "businessLifecycle": {
+    "activation": "true",
+    "deactivation": "false",
+    "rule": "Do not delete data. Mark business.active=false and block routes by route gate.",
+    "storage": "File-backed JSON and route-level isolation for each business.",
+    "restore": "When active again, route and API return to the same business data without data loss."
+  },
+  "businessDependencies": {
+    "inventory": "clientes/kechicharron/inventory.json",
+    "expenses": "clientes/kechicharron/expenses.json",
+    "orders": "clientes/kechicharron/orders.json",
+    "users": "clientes/kechicharron/users.json",
+    "business": "clientes/kechicharron/business.json"
+  },
+  "reportingFormula": {
+    "totalSales": "sum of delivered orders total",
+    "expenseTotal": "sum expenses by selected month",
+    "payrollCost": "sum expenses with category payroll or personal",
+    "inventoryCost": "sum stock * unitCost",
+    "monthlyProfit": "max(totalSales - expenseTotal - payrollCost - inventoryCost, 0)"
+  }
+}

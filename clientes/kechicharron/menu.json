@@ -1,0 +1,434 @@
+[
+  {
+    "id": "0d6e0178-d5a0-40c0-a577-cc7153f62132",
+    "category": "Favoritos",
+    "name": "Patacón relleno",
+    "description": "Pollo, cerdo, butifarra, mozzarella, maíz y salsas.",
+    "price": 20000,
+    "image": "patacon relleno .jpg",
+    "visual": ""
+  },
+  {
+    "id": "d608c92b-d3dc-4efa-afb0-858242a656e1",
+    "category": "Chicharrones",
+    "name": "Chicharrón personal",
+    "description": "Con yuca o patacones y suero.",
+    "price": 17000,
+    "image": "chicharron de 17mil.jpg",
+    "visual": ""
+  },
+  {
+    "id": "5e6e3cd1-ca22-4ce6-8677-c2aee05eb3ac",
+    "category": "Chicharrones",
+    "name": "Chicharrón doble",
+    "description": "Una porción generosa para compartir.",
+    "price": 30000,
+    "image": "chicharron doble.jpg",
+    "visual": ""
+  },
+  {
+    "id": "0f7333cc-b15c-4465-8414-f4cc95870d62",
+    "category": "Asados",
+    "name": "Chuletazo",
+    "description": "Acompañado con patacones y ensalada.",
+    "price": 20000,
+    "image": "chuletazo.jpg",
+    "visual": ""
+  },
+  {
+    "id": "2e02a623-add8-48c3-82ef-087c1df7fdf7",
+    "category": "Asados",
+    "name": "Pechuga gratinada",
+    "description": "Pechuga gratinada con papas o patacones y ensalada.",
+    "price": 25000,
+    "image": "pechuga gratinada.jpg",
+    "visual": ""
+  },
+  {
+    "id": "19156107-3d0d-4fa9-9673-0f9e26d13cb1",
+    "category": "Asados",
+    "name": "Asado mixto",
+    "description": "Pechuga, chuleta y carne, acompañado con patacones o papas a la francesa.",
+    "price": 30000,
+    "image": "asado mixto.jpg",
+    "visual": ""
+  },
+  {
+    "id": "0fcfe8ea-84ce-4bfa-8d16-91528126fea7",
+    "category": "BBQ",
+    "name": "Alitas BBQ (6 unidades)",
+    "description": "Alitas bañadas en salsa BBQ.",
+    "price": 15000,
+    "image": "picada alitas 50.000.jpg",
+    "visual": ""
+  },
+  {
+    "id": "ecb155a8-2017-44aa-a29c-da6ef1466f80",
+    "category": "Asados",
+    "name": "Carne asada",
+    "description": "Carne a la parrilla con el sabor de la casa.",
+    "price": 22000,
+    "image": "carne asada.jpg",
+    "visual": ""
+  },
+  {
+    "id": "6e5c26f6-592e-4ba6-9355-c13548f539f3",
+    "category": "Asados",
+    "name": "Pechuga asada",
+    "description": "Acompañada con patacones, yuca o papitas y ensalada.",
+    "price": 20000,
+    "image": "pechuga gratinada.jpg",
+    "visual": ""
+  },
+  {
+    "id": "6b1936b8-61c7-4a2f-85be-766e36753d0d",
+    "category": "BBQ",
+    "name": "Alitas BBQ (9 unidades)",
+    "description": "Alitas bañadas en salsa BBQ.",
+    "price": 25000,
+    "image": "picada alitas 50.000.jpg",
+    "visual": ""
+  },
+  {
+    "id": "bff59ff8-6b11-4c70-9a54-f2a397b4c4eb",
+    "category": "BBQ",
+    "name": "Picada de alitas BBQ",
+    "description": "18 alitas BBQ para compartir.",
+    "price": 50000,
+    "image": "picada alitas 50.000.jpg",
+    "visual": ""
+  },
+  {
+    "id": "9cf8006f-3eed-4d37-aabb-e9bcae6c3fe4",
+    "category": "BBQ",
+    "name": "Chicharrón BBQ",
+    "description": "Chicharrón bañado en salsa BBQ.",
+    "price": 20000,
+    "image": "chicharron doble.jpg",
+    "visual": ""
+  },
+  {
+    "id": "d183de78-2113-4e31-9a61-1f94bb4428d4",
+    "category": "BBQ",
+    "name": "Costillas BBQ personal",
+    "description": "Porción individual acompañada con papitas o patacones.",
+    "price": 20000,
+    "image": "costillas bbq normal y doble.jpg",
+    "visual": ""
+  },
+  {
+    "id": "31b2395c-6dde-4871-b9d4-69ac34043bac",
+    "category": "BBQ",
+    "name": "Costillas BBQ doble",
+    "description": "Porción doble acompañada con papitas o patacones.",
+    "price": 30000,
+    "image": "costillas bbq normal y doble.jpg",
+    "visual": ""
+  },
+  {
+    "id": "f61395e4-b242-4d62-8c9c-76859336c338",
+    "category": "Arroces",
+    "name": "Arroz paisa personal",
+    "description": "Con cerdo, pollo, chorizo, jamón, chicharrón, plátano y maíz.",
+    "price": 15000,
+    "image": "arroz paisa normal .jpg",
+    "visual": ""
+  },
+  {
+    "id": "b5206cae-02eb-407a-86be-9bcb0c12fd11",
+    "category": "Arroces",
+    "name": "Arroz paisa dúo",
+    "description": "Con cerdo, pollo, chorizo, jamón, chicharrón, plátano y maíz.",
+    "price": 30000,
+    "image": "arroz paisa normal .jpg",
+    "visual": ""
+  },
+  {
+    "id": "526385ea-70b8-4bb9-a9d4-57360038c254",
+    "category": "Arroces",
+    "name": "Arroz paisa trío",
+    "description": "Con cerdo, pollo, chorizo, jamón, chicharrón, plátano y maíz.",
+    "price": 40000,
+    "image": "arroz paisa normal .jpg",
+    "visual": ""
+  },
+  {
+    "id": "abf68b66-e1bf-46e3-857f-aa9be74a2509",
+    "category": "Arroces",
+    "name": "Arroz paisa familiar",
+    "description": "Con cerdo, pollo, chorizo, jamón, chicharrón, plátano y maíz.",
+    "price": 50000,
+    "image": "arroz paisa normal .jpg",
+    "visual": ""
+  },
+  {
+    "id": "76afb6a2-ab03-461c-9dd2-81d8fac4265c",
+    "category": "Especiales",
+    "name": "Plato especial para picar",
+    "description": "Chicharrón, arroz paisa, patacones, ensalada y suero.",
+    "price": 30000,
+    "image": "especial para picar.jpg",
+    "visual": ""
+  },
+  {
+    "id": "9adf4be3-d34d-47b3-84c2-2efece26145c",
+    "category": "Picadas",
+    "name": "Picada de chicharrón",
+    "description": "Chicharrón, alitas BBQ o fritas, yuca, patacones y ensalada.",
+    "price": 50000,
+    "image": "picada de chicharron.jpg",
+    "visual": ""
+  },
+  {
+    "id": "62a20095-8994-45af-a6dc-3be4f9651c4e",
+    "category": "Picadas",
+    "name": "Picada de salchipapa mediana",
+    "description": "Pollo, cerdo, queso, mozzarella, papa, salchicha, ripio, salsas y butifarra.",
+    "price": 40000,
+    "image": "picada de salchipapa mediana y grande.jpg",
+    "visual": ""
+  },
+  {
+    "id": "c6a63205-d1fc-40d1-89b3-780f150bd0a7",
+    "category": "Picadas",
+    "name": "Picada de salchipapa grande",
+    "description": "Pollo, cerdo, queso, mozzarella, papa, salchicha, ripio, salsas y butifarra.",
+    "price": 55000,
+    "image": "picada de salchipapa mediana y grande.jpg",
+    "visual": ""
+  },
+  {
+    "id": "7b892112-fe32-42b8-a431-18b7c81cbf8c",
+    "category": "Picadas",
+    "name": "Picada mixta para 2",
+    "description": "Chicharrón, alitas BBQ o fritas, yuca y patacones.",
+    "price": 35000,
+    "image": "picada mixta.jpg",
+    "visual": ""
+  },
+  {
+    "id": "0b99ae48-d190-4739-9639-cbfa7663f3d5",
+    "category": "Picadas",
+    "name": "Picada mixta para 2 BBQ",
+    "description": "Costillas BBQ, alitas BBQ, patacón, papitas, ensalada y suero.",
+    "price": 40000,
+    "image": "picada mixta.jpg",
+    "visual": ""
+  },
+  {
+    "id": "36338b65-b232-480d-9696-88b376bd1358",
+    "category": "Picadas",
+    "name": "Picada familiar",
+    "description": "Chicharrón, alitas BBQ o fritas, yuca, patacones, suero y arroz paisa.",
+    "price": 70000,
+    "image": "picada familiar de chicharron.jpg",
+    "visual": ""
+  },
+  {
+    "id": "9e061191-b035-48c7-9a27-f2ac6949a80c",
+    "category": "Picadas",
+    "name": "Picada mega familiar",
+    "description": "Chicharrón, alitas BBQ, salchipapas, costilla BBQ, yuca, patacones, suero y arroz paisa.",
+    "price": 100000,
+    "image": "picada familiar de chicharron.jpg",
+    "visual": ""
+  },
+  {
+    "id": "d2f5cab4-c41a-499a-aa42-79b5804ea269",
+    "category": "Perros calientes",
+    "name": "Perro súper",
+    "description": "Perro caliente de la casa.",
+    "price": 12000,
+    "image": "incono.jpg",
+    "visual": ""
+  },
+  {
+    "id": "3da699ea-a15a-4934-a519-a3985d91b9e6",
+    "category": "Perros calientes",
+    "name": "Choriperro",
+    "description": "Perro caliente con chorizo.",
+    "price": 15000,
+    "image": "incono.jpg",
+    "visual": ""
+  },
+  {
+    "id": "3a3b2828-2230-4d0b-a090-1aa79f559b30",
+    "category": "Hamburguesas",
+    "name": "Hamburguesa de carne",
+    "description": "Acompañada con papas a la francesa.",
+    "price": 17000,
+    "image": "hambuerguesa.jpg",
+    "visual": ""
+  },
+  {
+    "id": "69e87a82-f55b-49e4-9a12-674b778bcf3d",
+    "category": "Hamburguesas",
+    "name": "Hamburguesa de pollo",
+    "description": "Acompañada con papas a la francesa.",
+    "price": 20000,
+    "image": "hambuerguesa.jpg",
+    "visual": ""
+  },
+  {
+    "id": "a9965def-8cde-4a3b-816e-55edb3624d3e",
+    "category": "Hamburguesas",
+    "name": "Hamburguesa mixta",
+    "description": "Acompañada con papas a la francesa.",
+    "price": 25000,
+    "image": "hambuerguesa.jpg",
+    "visual": ""
+  },
+  {
+    "id": "d6eac06a-4b68-45ab-b4bd-4db1339386ee",
+    "category": "Hamburguesas",
+    "name": "Hamburguesa la quesuda",
+    "description": "Bañada en queso mozzarella y acompañada con papas a la francesa.",
+    "price": 23000,
+    "image": "hambuerguesa.jpg",
+    "visual": ""
+  },
+  {
+    "id": "68bc193d-9ccc-4c1e-92bf-101916467aa3",
+    "category": "Salchipapas",
+    "name": "Salchichorizo",
+    "description": "Papas, chorizo y salsas de la casa.",
+    "price": 15000,
+    "image": "salchichuleta.jpg",
+    "visual": ""
+  },
+  {
+    "id": "20a48999-0810-4008-8ec5-494d204b0ed7",
+    "category": "Salchipapas",
+    "name": "Salchichuleta",
+    "description": "Papas, chorizo, chuleta y salsas de la casa.",
+    "price": 20000,
+    "image": "salchichuleta.jpg",
+    "visual": ""
+  },
+  {
+    "id": "bda199c8-c7a7-4054-b69f-abd2a8e178d0",
+    "category": "Salchipapas",
+    "name": "Salchipollo",
+    "description": "Papas, pollo y salsas de la casa.",
+    "price": 20000,
+    "image": "salchipollo.jpg",
+    "visual": ""
+  },
+  {
+    "id": "7ba101aa-2f85-4dec-87b9-b96df91663b5",
+    "category": "Salchipapas",
+    "name": "Picada de salchipapas para dos",
+    "description": "Pollo, cerdo, queso, mozzarella, papa, salchicha, ripio, salsas y butifarra.",
+    "price": 40000,
+    "image": "picada de salchipapa mediana y grande.jpg",
+    "visual": ""
+  },
+  {
+    "id": "9ce8a904-ac90-442b-b633-a1115682b176",
+    "category": "Adicionales",
+    "name": "Papas fritas",
+    "description": "Porción adicional.",
+    "price": 6000,
+    "image": "incono.jpg",
+    "visual": ""
+  },
+  {
+    "id": "a479f38c-88a2-4609-bf8f-3f565422eeba",
+    "category": "Adicionales",
+    "name": "Patacones",
+    "description": "Porción adicional.",
+    "price": 5000,
+    "image": "incono.jpg",
+    "visual": ""
+  },
+  {
+    "id": "127bb05e-fbca-4c8c-acdf-e9ac4fc0910d",
+    "category": "Adicionales",
+    "name": "Porción de yuca",
+    "description": "Porción adicional.",
+    "price": 4000,
+    "image": "incono.jpg",
+    "visual": ""
+  },
+  {
+    "id": "13e7ed1e-b239-4328-849d-7714ef711ec8",
+    "category": "Adicionales",
+    "name": "Chicharrón",
+    "description": "Porción adicional.",
+    "price": 12000,
+    "image": "chicharron de 17mil.jpg",
+    "visual": ""
+  },
+  {
+    "id": "9de00c34-55b4-479b-834a-f2104c77734b",
+    "category": "Bebidas",
+    "name": "Gaseosa 400 ml",
+    "description": "Colombiana, Coca-Cola o Sprite.",
+    "price": 4000,
+    "image": "",
+    "visual": "drink"
+  },
+  {
+    "id": "9b48a6f5-0664-463a-ac3f-6dfb2a241b59",
+    "category": "Bebidas",
+    "name": "Gaseosa litro",
+    "description": "Colombiana, Coca-Cola o Sprite.",
+    "price": 6000,
+    "image": "",
+    "visual": "drink"
+  },
+  {
+    "id": "ac1feb3b-6320-4097-a5bc-3e79ad30a5fa",
+    "category": "Bebidas",
+    "name": "Gaseosa 1.5 L",
+    "description": "Colombiana, Coca-Cola o Sprite.",
+    "price": 8000,
+    "image": "",
+    "visual": "drink"
+  },
+  {
+    "id": "cb25daef-9bb6-4b0e-ab72-f0f3fecb7579",
+    "category": "Bebidas",
+    "name": "Agua 600 ml",
+    "description": "Agua fría.",
+    "price": 3000,
+    "image": "",
+    "visual": "water"
+  },
+  {
+    "id": "5f78dae9-8b63-4a0a-82ab-4ad1fcfbd5ca",
+    "category": "Bebidas",
+    "name": "Jugo natural",
+    "description": "Frío y preparado al momento.",
+    "price": 4000,
+    "image": "",
+    "visual": "juice"
+  },
+  {
+    "id": "5c4c8017-cbcf-4099-8197-4e067bcb0770",
+    "category": "Granizados",
+    "name": "Granizado pequeño",
+    "description": "Frío, delicioso y con toppings.",
+    "price": 10000,
+    "image": "WhatsApp Image 2026-09-11 at 23.58.44.jpeg",
+    "visual": ""
+  },
+  {
+    "id": "e0a69b80-e6e0-463e-bdf8-c2e64a873768",
+    "category": "Granizados",
+    "name": "Granizado mediano",
+    "description": "El tamaño perfecto para refrescarte.",
+    "price": 15000,
+    "image": "WhatsApp Image 2026-09-11 at 23.58.44.jpeg",
+    "visual": ""
+  },
+  {
+    "id": "4547b3d9-d944-48d7-80c0-faa671b0a6ab",
+    "category": "Granizados",
+    "name": "Granizado grande",
+    "description": "Más sabor, más toppings, más disfrute.",
+    "price": 20000,
+    "image": "WhatsApp Image 2026-09-11 at 23.58.44.jpeg",
+    "visual": ""
+  }
+]

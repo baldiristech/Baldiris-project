@@ -1,0 +1,9 @@
+{
+  "name": "K.E. Chicharrón Cocina",
+  "short_name": "Cocina K.E.",
+  "start_url": "/cocina.html",
+  "display": "standalone",
+  "background_color": "#191817",
+  "theme_color": "#191817",
+  "icons": [{ "src": "/incono.jpg", "sizes": "192x192", "type": "image/jpeg" }]
+}

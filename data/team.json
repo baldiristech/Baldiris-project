@@ -1,0 +1,29 @@
+[
+  {
+    "id": "t-1",
+    "name": "Laura Méndez",
+    "email": "laura@baldiris.com",
+    "role": "Desarrollo",
+    "project": "Sistema POS",
+    "payment": "Mensual",
+    "status": "Activo"
+  },
+  {
+    "id": "t-2",
+    "name": "Mateo Rojas",
+    "email": "mateo@baldiris.com",
+    "role": "Diseño UX",
+    "project": "Portal corporativo",
+    "payment": "Por proyecto",
+    "status": "Activo"
+  },
+  {
+    "id": "t-3",
+    "name": "Camila Torres",
+    "email": "camila@baldiris.com",
+    "role": "Soporte",
+    "project": "General",
+    "payment": "Mensual",
+    "status": "Pendiente"
+  }
+]

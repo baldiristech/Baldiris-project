@@ -1,0 +1,13 @@
+{
+  "name": "K.E. Chicharrón",
+  "short_name": "K.E. Chicharrón",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#191817",
+  "theme_color": "#b31318",
+  "description": "Menú QR, cocina y reportes de ventas",
+  "icons": [
+    { "src": "/incono.jpg", "sizes": "192x192", "type": "image/jpeg", "purpose": "any maskable" },
+    { "src": "/incono.jpg", "sizes": "512x512", "type": "image/jpeg", "purpose": "any maskable" }
+  ]
+}
