@@ -17,8 +17,16 @@ const STORAGE_KEYS = {
   businesses: 'baldiris.businessData'
 };
 const kechicharronUrl = 'https://baldiris-project.onrender.com';
+const nativeFetch = window.fetch.bind(window);
+window.fetch = (resource, options) => {
+  const requestUrl = typeof resource === 'string' ? resource : resource?.url;
+  if (requestUrl?.startsWith('http://localhost:8080/')) {
+    resource = requestUrl.replace('http://localhost:8080', window.location.origin);
+  }
+  return nativeFetch(resource, options);
+};
 const businessData = {
-  1: { name: 'K.E. Chicharrón', city: 'Bogotá', client: 'K.E. Chicharrón', project: 'Sistema POS', active: true, products: [{ name: 'Patacón relleno', category: 'Favoritos', price: 20000, description: 'Pollo, cerdo, butifarra, mozzarella, maíz y salsas.', image: 'patacon relleno .jpg', available: true }, { name: 'Chicharrón personal', category: 'Chicharrones', price: 17000, description: 'Con yuca o patacones y suero.', image: 'chicharron de 17mil.jpg', available: true }, { name: 'Chicharrón doble', category: 'Chicharrones', price: 30000, description: 'Una porción generosa para compartir.', image: 'chicharron doble.jpg', available: true }, { name: 'Chuletazo', category: 'Asados', price: 20000, description: 'Acompañado con patacones y ensalada.', image: 'chuletazo.jpg', available: true }, { name: 'Pechuga gratinada', category: 'Asados', price: 25000, description: 'Pechuga gratinada con papas o patacones y ensalada.', image: 'pechuga gratinada.jpg', available: true }, { name: 'Sopa del día', category: 'Platos fuertes', price: 12000, description: 'Producto temporal no disponible.', image: '', available: false }] }
+  1: { name: 'K.E. Chicharrón', city: 'Bogotá', client: 'K.E. Chicharrón', project: 'Sistema POS', active: true, products: [{ name: 'Patacón relleno', category: 'Favoritos', price: 20000, description: 'Pollo, cerdo, butifarra, mozzarella, maíz y salsas.', image: 'patacon relleno .jpg', available: true }, { name: 'Chicharrón personal', category: 'Chicharrones', price: 17000, description: 'Con yuca o patacones y suero.', image: 'chicharron de 17mil.jpg', available: true }, { name: 'Chicharrón doble', category: 'Chicharrones', price: 30000, description: 'Una porción generosa para compartir.', image: 'chicharron doble.jpg', available: true }, { name: 'Chuletazo', category: 'Asados', price: 20000, description: 'Acompañado con patacones y ensalada.', image: 'chuletazo.jpg', available: true }, { name: 'Pechuga gratinada', category: 'Asados', price: 25000, description: 'Pechuga gratinada con papas o patacones y ensalada.', image: 'pechuga gratinada.jpg', available: true }] }
 };
 const views = {
   dashboard: { title: 'Dashboard', subtitle: 'Una vista clara de la operación de BALDIRIS.', render: dashboardView },
@@ -99,7 +107,7 @@ function reservesView() {
   const reserveRows = rows.length ? rows.map(row => `<div class="activity-row"><span class="activity-icon">◇</span><div><strong>${row.concept}</strong><small>${row.business || 'BALDIRIS'} · ${row.date || '-'}</small></div><span class="amount">${money(row.amount)}</span></div>`).join('') : `<p class="muted">BALDIRIS espera el primer movimiento contable del negocio para calcular la reserva.</p>`;
   return layout('Reservas', 'Dinero separado para proteger el crecimiento.', `<div class="kpi-grid"><div class="kpi"><div class="kpi-head">Utilidad del periodo <span class="kpi-icon blue">✦</span></div><h3>${money(Math.max(financeTotals().income - financeTotals().expense, 0))}</h3><span class="trend">Sin ingresos - gastos</span></div><div class="kpi"><div class="kpi-head">Porcentaje configurado <span class="kpi-icon orange">%</span></div><h3>0%</h3><span class="trend">Sin configuración</span></div><div class="kpi"><div class="kpi-head">Reserva acumulada <span class="kpi-icon green">◇</span></div><h3>${money(total)}</h3><span class="trend">${rows.length} periodo(s)</span></div><div class="kpi"><div class="kpi-head">Utilidad distribuible <span class="kpi-icon pink">$</span></div><h3>${money(Math.max(financeTotals().income - financeTotals().expense - total, 0))}</h3><span class="trend">Sin datos</span></div></div><section class="panel" style="margin-top:14px"><div class="panel-head"><h2>Configuración de reserva</h2><button class="primary-button" data-action="open-movement-modal" data-movement-type="reserve">Editar porcentaje</button></div>${reserveRows}</section>`); }
 function selectedBusiness() { return businessData[state.selectedBusinessId]; }
-function businessContext() { const business = selectedBusiness(); return `<div class="pos-header"><div><p class="eyebrow">NEGOCIO ACTIVO · BUSINESS_ID ${state.selectedBusinessId}</p><h2>${business.name}</h2><p>${business.city} · Datos aislados del resto de negocios.</p></div><span class="status">Tenant protegido</span></div>`; }
+function businessContext() { const business = selectedBusiness(); return `<div class="pos-header"><div><p class="eyebrow">NEGOCIO ACTIVO · BUSINESS_ID ${state.selectedBusinessId}</p><h2>${business.name}</h2><p>${business.city} · Datos aislados del resto de negocios.</p></div><span class="status">Aislamiento activo</span></div>`; }
 async function syncBusinessesFromKechicharron() {
   try {
     const response = await fetch(`${kechicharronUrl}/api/business`, { cache: 'no-store' });
@@ -437,6 +445,7 @@ document.getElementById('collaborator-modal')?.addEventListener('click', event =
 document.getElementById('notifications-button')?.addEventListener('click', () => { state.view = 'reportes'; render(); });
 document.getElementById('help-button')?.addEventListener('click', () => window.alert('Usa el menú lateral para abrir módulos. Desde Mis negocios puedes seleccionar K.E. Chicharrón y desde Usuarios y roles gestionar accesos.'));
 document.addEventListener('click', event => { if (event.target.closest('[data-action="security-help"]')) window.alert('La seguridad del panel se configura con las variables de entorno de Render y las credenciales del servicio.'); });
+document.addEventListener('click', event => { if (event.target.closest('[data-action="new-user"]')) window.setTimeout(() => document.getElementById('new-user-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0); });
 document.getElementById('logout').addEventListener('click', () => { localStorage.removeItem('baldiris-auth'); localStorage.removeItem('baldiris-user'); state.authenticated = false; document.getElementById('app-shell').classList.add('hidden'); document.getElementById('login-screen').classList.remove('hidden'); });
 document.getElementById('open-sidebar').addEventListener('click', () => document.querySelector('.sidebar').classList.add('open')); document.getElementById('close-sidebar').addEventListener('click', () => document.querySelector('.sidebar').classList.remove('open'));
 if (state.authenticated) showApp();
