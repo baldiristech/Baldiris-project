@@ -320,7 +320,6 @@ function initReports() {
   if (document.getElementById('new-dish')) document.getElementById('new-dish').addEventListener('click', () => showDishForm());
   if (document.getElementById('cancel-dish')) document.getElementById('cancel-dish').addEventListener('click', () => hideDishForm());
   if (document.getElementById('dish-form')) document.getElementById('dish-form').addEventListener('submit', saveDish);
-  ensureDashboardOperationalUI();
   ensureDashboardOperationalEvents();
   seedMenuIfEmpty();
   loadReport();
@@ -386,7 +385,15 @@ function ensureDashboardOperationalEvents() {
     document.getElementById('inventory-form').reset();
     document.getElementById('inventory-id').value = '';
   });
-  if (document.getElementById('export-report-button')) document.getElementById('export-report-button').addEventListener('click', downloadReportCsv);
+  const financeHeading = [...document.querySelectorAll('.section-heading')].find(heading => heading.querySelector('h2')?.textContent.includes('Gastos e inventario'));
+  if (financeHeading && !financeHeading.querySelector('[data-export-report]')) {
+    const exportButton = document.createElement('button');
+    exportButton.className = 'export-button';
+    exportButton.dataset.exportReport = 'true';
+    exportButton.textContent = 'Exportar reporte →';
+    exportButton.addEventListener('click', downloadReportCsv);
+    financeHeading.appendChild(exportButton);
+  }
 }
 
 async function downloadReportCsv() {
