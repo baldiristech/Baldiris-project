@@ -62,6 +62,7 @@ const saveCart = cart => localStorage.setItem('ke-cart', JSON.stringify(cart));
 const toast = message => { const el = document.getElementById('toast'); if (!el) return; el.textContent = message; el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 2800); };
 
 async function initMenu() {
+  bindMenuControls();
   try {
     const response = await fetch('/api/menu', { cache: 'no-store' });
     if (response.ok) {
@@ -80,10 +81,6 @@ async function initMenu() {
   tabs.addEventListener('click', event => { const button = event.target.closest('button'); if (!button) return; active = button.dataset.category; tabs.querySelectorAll('button').forEach(item => item.classList.toggle('active', item === button)); draw(); });
   grid.addEventListener('click', event => { const button = event.target.closest('.add-button'); if (!button) return; const item = menu[button.dataset.index]; const cart = getCart(); const found = cart.find(row => row.name === item.name); found ? found.quantity++ : cart.push({ ...item, quantity: 1 }); saveCart(cart); updateCart(); toast(`${item.name} agregado al pedido`); });
   draw(); updateCart();
-  document.getElementById('open-cart').addEventListener('click', () => document.getElementById('cart-drawer').classList.add('open'));
-  document.getElementById('close-cart').addEventListener('click', () => document.getElementById('cart-drawer').classList.remove('open'));
-  document.getElementById('checkout-button').addEventListener('click', () => { if (!getCart().length) return toast('Agrega al menos un producto'); document.getElementById('checkout-modal').hidden = false; });
-  document.getElementById('close-checkout').addEventListener('click', () => document.getElementById('checkout-modal').hidden = true);
   document.querySelectorAll('input[name="delivery-type"]').forEach(radio => radio.addEventListener('change', toggleDeliveryFields));
   document.getElementById('payment-method').addEventListener('change', updatePaymentInfo);
   document.getElementById('copy-breb').addEventListener('click', copyBrebNumber);
@@ -99,11 +96,27 @@ async function initMenu() {
   document.getElementById('order-form').addEventListener('submit', submitOrder);
   loadMenuKitchenState();
   setInterval(loadMenuKitchenState, 10000);
-  document.getElementById('open-pqr').addEventListener('click', () => document.getElementById('pqr-modal').hidden = false);
-  document.getElementById('close-pqr').addEventListener('click', () => document.getElementById('pqr-modal').hidden = true);
-  document.getElementById('pqr-form').addEventListener('submit', submitPqr);
   updatePaymentInfo();
   toggleDeliveryFields();
+}
+function bindMenuControls() {
+  const cartButton = document.getElementById('open-cart');
+  const closeCartButton = document.getElementById('close-cart');
+  const drawer = document.getElementById('cart-drawer');
+  const checkoutButton = document.getElementById('checkout-button');
+  const checkoutModal = document.getElementById('checkout-modal');
+  const openPqrButton = document.getElementById('open-pqr');
+  const closePqrButton = document.getElementById('close-pqr');
+  const pqrModal = document.getElementById('pqr-modal');
+  const openCart = () => { drawer.classList.add('open'); drawer.setAttribute('aria-hidden', 'false'); cartButton.setAttribute('aria-expanded', 'true'); updateCart(); };
+  const closeCart = () => { drawer.classList.remove('open'); drawer.setAttribute('aria-hidden', 'true'); cartButton.setAttribute('aria-expanded', 'false'); };
+  cartButton?.addEventListener('click', openCart);
+  closeCartButton?.addEventListener('click', closeCart);
+  checkoutButton?.addEventListener('click', () => { if (!getCart().length) return toast('Agrega al menos un producto'); checkoutModal.hidden = false; });
+  document.getElementById('close-checkout')?.addEventListener('click', () => checkoutModal.hidden = true);
+  openPqrButton?.addEventListener('click', () => pqrModal.hidden = false);
+  closePqrButton?.addEventListener('click', () => pqrModal.hidden = true);
+  document.getElementById('pqr-form')?.addEventListener('submit', submitPqr);
 }
 async function loadMenuKitchenState() {
   const response = await fetch('/api/kitchen', { cache: 'no-store' });
