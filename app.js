@@ -16,7 +16,7 @@ const STORAGE_KEYS = {
   movements: 'baldiris.movements',
   businesses: 'baldiris.businessData'
 };
-const kechicharronUrl = 'https://baldiris-project.onrender.com';
+const kechicharronUrl = 'https://kechicharron-pos.onrender.com';
 const nativeFetch = window.fetch.bind(window);
 window.fetch = (resource, options) => {
   const requestUrl = typeof resource === 'string' ? resource : resource?.url;
