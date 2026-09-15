@@ -65,6 +65,10 @@ function updateUserIdentity() {
   const roleElement = document.getElementById('user-role');
   if (nameElement) nameElement.textContent = name;
   if (roleElement) roleElement.textContent = user.role || 'Super Admin';
+  const menuName = document.getElementById('user-menu-name');
+  const menuEmail = document.getElementById('user-menu-email');
+  if (menuName) menuName.textContent = name;
+  if (menuEmail) menuEmail.textContent = user.email || 'Cuenta activa';
 }
 function layout(title, subtitle, body) {
   return `<div class="view-heading"><div><p class="eyebrow">BALDIRIS / ADMINISTRACIÓN</p><h1>${title}</h1><p>${subtitle}</p></div><input type="month" id="date-calendar" class="date-pill" value="${state.selectedMonth}" aria-label="Seleccionar fecha"></div>${body}`;
@@ -446,6 +450,15 @@ document.getElementById('notifications-button')?.addEventListener('click', () =>
 document.getElementById('help-button')?.addEventListener('click', () => window.alert('Usa el menú lateral para abrir módulos. Desde Mis negocios puedes seleccionar K.E. Chicharrón y desde Usuarios y roles gestionar accesos.'));
 document.addEventListener('click', event => { if (event.target.closest('[data-action="security-help"]')) window.alert('La seguridad del panel se configura con las variables de entorno de Render y las credenciales del servicio.'); });
 document.addEventListener('click', event => { if (event.target.closest('[data-action="new-user"]')) window.setTimeout(() => document.getElementById('new-user-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0); });
-document.getElementById('logout').addEventListener('click', () => { localStorage.removeItem('baldiris-auth'); localStorage.removeItem('baldiris-user'); state.authenticated = false; document.getElementById('app-shell').classList.add('hidden'); document.getElementById('login-screen').classList.remove('hidden'); });
+function openLogoutConfirmation() { document.getElementById('logout-modal')?.classList.remove('hidden'); }
+function closeLogoutConfirmation() { document.getElementById('logout-modal')?.classList.add('hidden'); }
+function finishLogout() { closeLogoutConfirmation(); document.getElementById('user-menu')?.classList.add('hidden'); localStorage.removeItem('baldiris-auth'); localStorage.removeItem('baldiris-user'); state.authenticated = false; document.getElementById('app-shell').classList.add('hidden'); document.getElementById('login-screen').classList.remove('hidden'); }
+document.getElementById('logout').addEventListener('click', openLogoutConfirmation);
+document.getElementById('user-menu-logout')?.addEventListener('click', openLogoutConfirmation);
+document.getElementById('cancel-logout')?.addEventListener('click', closeLogoutConfirmation);
+document.getElementById('confirm-logout')?.addEventListener('click', finishLogout);
+document.getElementById('logout-modal')?.addEventListener('click', event => { if (event.target.id === 'logout-modal') closeLogoutConfirmation(); });
+document.getElementById('user-menu-button')?.addEventListener('click', event => { event.stopPropagation(); const menu = document.getElementById('user-menu'); const isHidden = menu.classList.toggle('hidden'); event.currentTarget.setAttribute('aria-expanded', String(!isHidden)); updateUserIdentity(); });
+document.addEventListener('click', event => { if (!event.target.closest('#user-menu') && !event.target.closest('#user-menu-button')) document.getElementById('user-menu')?.classList.add('hidden'); });
 document.getElementById('open-sidebar').addEventListener('click', () => document.querySelector('.sidebar').classList.add('open')); document.getElementById('close-sidebar').addEventListener('click', () => document.querySelector('.sidebar').classList.remove('open'));
 if (state.authenticated) showApp();
