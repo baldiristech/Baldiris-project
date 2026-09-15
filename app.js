@@ -16,6 +16,7 @@ const STORAGE_KEYS = {
   movements: 'baldiris.movements',
   businesses: 'baldiris.businessData'
 };
+const kechicharronUrl = 'https://baldiris-project.onrender.com';
 const businessData = {
   1: { name: 'K.E. Chicharrón', city: 'Bogotá', client: 'K.E. Chicharrón', project: 'Sistema POS', active: true, products: [{ name: 'Patacón relleno', category: 'Favoritos', price: 20000, description: 'Pollo, cerdo, butifarra, mozzarella, maíz y salsas.', image: 'patacon relleno .jpg', available: true }, { name: 'Chicharrón personal', category: 'Chicharrones', price: 17000, description: 'Con yuca o patacones y suero.', image: 'chicharron de 17mil.jpg', available: true }, { name: 'Chicharrón doble', category: 'Chicharrones', price: 30000, description: 'Una porción generosa para compartir.', image: 'chicharron doble.jpg', available: true }, { name: 'Chuletazo', category: 'Asados', price: 20000, description: 'Acompañado con patacones y ensalada.', image: 'chuletazo.jpg', available: true }, { name: 'Pechuga gratinada', category: 'Asados', price: 25000, description: 'Pechuga gratinada con papas o patacones y ensalada.', image: 'pechuga gratinada.jpg', available: true }, { name: 'Sopa del día', category: 'Platos fuertes', price: 12000, description: 'Producto temporal no disponible.', image: '', available: false }] }
 };
@@ -86,7 +87,7 @@ function selectedBusiness() { return businessData[state.selectedBusinessId]; }
 function businessContext() { const business = selectedBusiness(); return `<div class="pos-header"><div><p class="eyebrow">NEGOCIO ACTIVO · BUSINESS_ID ${state.selectedBusinessId}</p><h2>${business.name}</h2><p>${business.city} · Datos aislados del resto de negocios.</p></div><span class="status">Tenant protegido</span></div>`; }
 async function syncBusinessesFromKechicharron() {
   try {
-    const response = await fetch('http://localhost:3000/api/business', { cache: 'no-store' });
+    const response = await fetch(`${kechicharronUrl}/api/business`, { cache: 'no-store' });
     if (!response.ok) return;
     const remote = await response.json();
     if (!remote || typeof remote.active !== 'boolean') return;
@@ -98,7 +99,7 @@ async function syncBusinessesFromKechicharron() {
 }
 async function syncUsersFromKechicharron() {
   try {
-    const response = await fetch('http://localhost:3000/api/users', { cache: 'no-store' });
+    const response = await fetch(`${kechicharronUrl}/api/users`, { cache: 'no-store' });
     if (!response.ok) return;
     const remote = await response.json();
     if (!Array.isArray(remote)) return;
@@ -134,7 +135,7 @@ function businessesView() {
   }).join('');
   return layout('Mis negocios', 'Cada negocio vive dentro del mismo núcleo, con sus datos separados.', `<div class="section-list">${businessCards}</div>`);
 }
-function posView() { return layout('BALDIRIS POS', 'K.E. Chicharrón · operación del negocio seleccionado.', `<div class="pos-header"><div><p class="eyebrow">NEGOCIO ACTIVO</p><h2>K.E. Chicharrón</h2><p>Menú, pedidos, cocina, ventas y reportes.</p></div><a class="primary-button" href="http://localhost:3000/" target="_blank" rel="noopener">Abrir aplicativo original ↗</a></div><div class="kpi-grid"><div class="kpi"><div class="kpi-head">Ventas de hoy <span class="kpi-icon green">↗</span></div><h3>${money(0)}</h3><span class="trend">Sin pedidos</span></div><div class="kpi"><div class="kpi-head">Pedidos activos <span class="kpi-icon orange">◇</span></div><h3>0</h3><span class="trend">Sin cocina</span></div><div class="kpi"><div class="kpi-head">Ticket promedio <span class="kpi-icon blue">$</span></div><h3>${money(0)}</h3><span class="trend">Sin ventas</span></div><div class="kpi"><div class="kpi-head">Productos activos <span class="kpi-icon pink">▦</span></div><h3>0</h3><span class="trend">Sin catálogo</span></div></div><section class="panel" style="margin-top:14px"><div class="panel-head"><h2>Flujo de cocina</h2><span class="status">Sin cronograma</span></div><div class="section-list"><div class="module-card"><span class="eyebrow">ENTRANTES</span><h3>0 pedidos</h3><p>Esperando confirmación.</p></div><div class="module-card"><span class="eyebrow">EN PREPARACIÓN</span><h3>0 pedidos</h3><p>En manos de cocina.</p></div><div class="module-card"><span class="eyebrow">LISTOS</span><h3>0 pedidos</h3><p>Listos para entregar.</p></div></div></section>`); }
+function posView() { return layout('BALDIRIS POS', 'K.E. Chicharrón · operación del negocio seleccionado.', `<div class="pos-header"><div><p class="eyebrow">NEGOCIO ACTIVO</p><h2>K.E. Chicharrón</h2><p>Menú, pedidos, cocina, ventas y reportes.</p></div><a class="primary-button" href="${kechicharronUrl}/" target="_blank" rel="noopener">Abrir aplicativo original ↗</a></div><div class="kpi-grid"><div class="kpi"><div class="kpi-head">Ventas de hoy <span class="kpi-icon green">↗</span></div><h3>${money(0)}</h3><span class="trend">Sin pedidos</span></div><div class="kpi"><div class="kpi-head">Pedidos activos <span class="kpi-icon orange">◇</span></div><h3>0</h3><span class="trend">Sin cocina</span></div><div class="kpi"><div class="kpi-head">Ticket promedio <span class="kpi-icon blue">$</span></div><h3>${money(0)}</h3><span class="trend">Sin ventas</span></div><div class="kpi"><div class="kpi-head">Productos activos <span class="kpi-icon pink">▦</span></div><h3>0</h3><span class="trend">Sin catálogo</span></div></div><section class="panel" style="margin-top:14px"><div class="panel-head"><h2>Flujo de cocina</h2><span class="status">Sin cronograma</span></div><div class="section-list"><div class="module-card"><span class="eyebrow">ENTRANTES</span><h3>0 pedidos</h3><p>Esperando confirmación.</p></div><div class="module-card"><span class="eyebrow">EN PREPARACIÓN</span><h3>0 pedidos</h3><p>En manos de cocina.</p></div><div class="module-card"><span class="eyebrow">LISTOS</span><h3>0 pedidos</h3><p>Listos para entregar.</p></div></div></section>`); }
 function simpleModule(title, subtitle, cards) { return layout(title, subtitle, `<div class="section-list">${cards.map(card => `<div class="module-card"><span class="kpi-icon ${card.color}">${card.icon}</span><h3>${card.title}</h3><p>${card.text}</p></div>`).join('')}</div>`); }
 function clientsView() {
   const rows = state.clients.map(client => `<tr><td><strong>${client.name}</strong><br><small>${client.type || 'Cliente'}</small></td><td>${client.contact || 'Sin contacto'}</td><td>${client.projects || 'Sin proyectos'}</td><td>${money(Number(client.income) || 0)}</td><td><span class="table-status ${client.status === 'Activo' ? 'success' : 'warn'}">${client.status || 'Activo'}</span></td></tr>`).join('');
@@ -233,7 +234,7 @@ document.addEventListener('click', event => { const navigation = event.target.cl
   const nextActive = businessData[id].active === false ? true : false;
   businessData[id].active = nextActive;
   try {
-    fetch('http://localhost:3000/api/business', {
+    fetch(`${kechicharronUrl}/api/business`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ active: nextActive })
@@ -386,7 +387,7 @@ document.getElementById('user-form')?.addEventListener('submit', async event => 
   if (!name || !email) return;
   const newUser = { id: `u-${Date.now()}`, name, email, role, businessIds: business === '*' ? ['*'] : [Number(business)], status: 'Activo' };
   try {
-    const response = await fetch('http://localhost:8080/api/users', {
+    const response = await fetch('/api/users', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, role, businessIds: newUser.businessIds })
