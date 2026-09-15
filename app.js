@@ -43,6 +43,21 @@ const views = {
 };
 const root = document.getElementById('view-container');
 function money(value) { return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(value); }
+function userInitials(user) {
+  const source = String(user?.name || user?.email || 'Usuario').trim();
+  const parts = source.includes('@') ? source.split('@')[0].split(/[._-]+/).filter(Boolean) : source.split(/\s+/).filter(Boolean);
+  return parts.slice(0, 2).map(part => part[0].toUpperCase()).join('') || 'U';
+}
+function updateUserIdentity() {
+  const user = JSON.parse(localStorage.getItem('baldiris-user') || '{}');
+  const initials = userInitials(user);
+  const name = user.name || user.email || 'Usuario';
+  document.querySelectorAll('#user-avatar, #user-avatar-top').forEach(element => { element.textContent = initials; });
+  const nameElement = document.getElementById('user-name');
+  const roleElement = document.getElementById('user-role');
+  if (nameElement) nameElement.textContent = name;
+  if (roleElement) roleElement.textContent = user.role || 'Super Admin';
+}
 function layout(title, subtitle, body) {
   return `<div class="view-heading"><div><p class="eyebrow">BALDIRIS / ADMINISTRACIÓN</p><h1>${title}</h1><p>${subtitle}</p></div><input type="month" id="date-calendar" class="date-pill" value="${state.selectedMonth}" aria-label="Seleccionar fecha"></div>${body}`;
 }
@@ -213,9 +228,10 @@ async function showApp() {
   document.getElementById('app-shell').classList.remove('hidden');
   await syncBusinessesFromKechicharron();
   await syncUsersFromKechicharron();
+  updateUserIdentity();
   render();
 }
-document.getElementById('login-form').addEventListener('submit', async event => { event.preventDefault(); const email = document.getElementById('email').value.trim(); const password = document.getElementById('password').value; const errorNode = document.getElementById('login-error'); try { const response = await fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) }); const payload = await response.json().catch(() => ({})); if (!response.ok) throw new Error(payload.error || 'Credenciales no válidas.'); localStorage.setItem('baldiris-auth', 'true'); state.authenticated = true; showApp(); } catch (error) { errorNode.textContent = error.message || 'No se pudo validar el acceso.'; } });
+document.getElementById('login-form').addEventListener('submit', async event => { event.preventDefault(); const email = document.getElementById('email').value.trim(); const password = document.getElementById('password').value; const errorNode = document.getElementById('login-error'); try { const response = await fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) }); const payload = await response.json().catch(() => ({})); if (!response.ok) throw new Error(payload.error || 'Credenciales no válidas.'); localStorage.setItem('baldiris-auth', 'true'); localStorage.setItem('baldiris-user', JSON.stringify(payload.user || { email, role: 'Super Admin' })); state.authenticated = true; showApp(); } catch (error) { errorNode.textContent = error.message || 'No se pudo validar el acceso.'; } });
 function openBusinessModal() { document.getElementById('business-modal').classList.remove('hidden'); document.getElementById('business-name').focus(); }
 function closeBusinessModal() { document.getElementById('business-modal').classList.add('hidden'); document.getElementById('business-form').reset(); }
 function openClientModal() { const modal = document.getElementById('client-modal'); if (modal) { modal.classList.remove('hidden'); document.getElementById('client-name').focus(); } }
@@ -418,6 +434,6 @@ document.getElementById('client-modal')?.addEventListener('click', event => { if
 document.getElementById('close-collaborator-modal')?.addEventListener('click', closeCollaboratorModal);
 document.getElementById('cancel-collaborator')?.addEventListener('click', closeCollaboratorModal);
 document.getElementById('collaborator-modal')?.addEventListener('click', event => { if (event.target.id === 'collaborator-modal') closeCollaboratorModal(); });
-document.getElementById('logout').addEventListener('click', () => { localStorage.removeItem('baldiris-auth'); state.authenticated = false; document.getElementById('app-shell').classList.add('hidden'); document.getElementById('login-screen').classList.remove('hidden'); });
+document.getElementById('logout').addEventListener('click', () => { localStorage.removeItem('baldiris-auth'); localStorage.removeItem('baldiris-user'); state.authenticated = false; document.getElementById('app-shell').classList.add('hidden'); document.getElementById('login-screen').classList.remove('hidden'); });
 document.getElementById('open-sidebar').addEventListener('click', () => document.querySelector('.sidebar').classList.add('open')); document.getElementById('close-sidebar').addEventListener('click', () => document.querySelector('.sidebar').classList.remove('open'));
 if (state.authenticated) showApp();

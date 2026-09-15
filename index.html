@@ -10,14 +10,14 @@
 <body>
   <div id="login-screen" class="login-screen">
     <div class="login-art">
-      <div class="brand-mark large">B</div>
+      <img class="brand-logo hero-logo" src="logo-baldiris.png" alt="BALDIRIS">
       <p class="eyebrow">PLATAFORMA EMPRESARIAL</p>
       <h1>Una capa central para hacer crecer cada negocio.</h1>
       <p class="login-copy">Administra las operaciones de BALDIRIS y sus negocios desde un solo lugar, con una arquitectura preparada para escalar.</p>
       <div class="login-foot"><span class="status-dot"></span> Sistema operativo · Versión 1.0</div>
     </div>
     <form id="login-form" class="login-card">
-      <div class="brand-line"><span class="brand-mark">B</span><strong>BALDIRIS</strong></div>
+      <div class="brand-line"><img class="brand-logo" src="logo-baldiris.png" alt="BALDIRIS"><strong>BALDIRIS</strong></div>
       <p class="eyebrow">ACCESO SEGURO</p>
       <h2>Bienvenido de nuevo</h2>
       <p class="muted">Ingresa a tu espacio de administración.</p>
@@ -33,7 +33,7 @@
 
   <div id="app-shell" class="app-shell hidden">
     <aside class="sidebar">
-      <div class="sidebar-head"><div class="brand-mark">B</div><strong>BALDIRIS</strong><button id="close-sidebar" class="icon-button mobile-only" aria-label="Cerrar menú">×</button></div>
+      <div class="sidebar-head"><img class="brand-logo" src="logo-baldiris.png" alt="BALDIRIS"><strong>BALDIRIS</strong><button id="close-sidebar" class="icon-button mobile-only" aria-label="Cerrar menú">×</button></div>
       <div class="workspace-switcher"><span class="workspace-icon">B</span><span><small>ESPACIO ACTIVO</small><strong>BALDIRIS central</strong></span><span class="chevron">⌄</span></div>
       <nav aria-label="Navegación principal">
         <p class="nav-label">VISTA GENERAL</p>
@@ -58,10 +58,10 @@
         <button class="nav-item nav-subitem" data-view="pedidos"><span>▤</span> Pedidos</button>
         <button class="nav-item nav-subitem" data-view="cocina"><span>♨</span> Cocina</button>
       </nav>
-      <div class="sidebar-bottom"><button class="nav-item" data-view="configuracion"><span>⚙</span> Configuración</button><div class="user-mini"><span class="avatar">AG</span><span><strong>Andrés García</strong><small>Super Admin</small></span><button id="logout" class="logout" aria-label="Cerrar sesión">↪</button></div></div>
+      <div class="sidebar-bottom"><button class="nav-item" data-view="configuracion"><span>⚙</span> Configuración</button><div class="user-mini"><span class="avatar" id="user-avatar">U</span><span><strong id="user-name">Usuario</strong><small id="user-role">Super Admin</small></span><button id="logout" class="logout" aria-label="Cerrar sesión">↪</button></div></div>
     </aside>
     <main class="main-content">
-      <header class="topbar"><button id="open-sidebar" class="icon-button mobile-only" aria-label="Abrir menú">☰</button><div class="breadcrumb"><span>BALDIRIS</span><b>/</b><strong id="breadcrumb-current">Dashboard</strong></div><div class="top-actions"><button class="icon-button" title="Notificaciones" aria-label="Notificaciones">♢<i></i></button><button class="help-button">?</button><span class="avatar">AG</span></div></header>
+      <header class="topbar"><button id="open-sidebar" class="icon-button mobile-only" aria-label="Abrir menú">☰</button><div class="breadcrumb"><span>BALDIRIS</span><b>/</b><strong id="breadcrumb-current">Dashboard</strong></div><div class="top-actions"><button class="icon-button" title="Notificaciones" aria-label="Notificaciones">♢<i></i></button><button class="help-button">?</button><span class="avatar" id="user-avatar-top">U</span></div></header>
       <div id="view-container"></div>
     </main>
   </div>
