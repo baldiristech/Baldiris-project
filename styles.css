@@ -5,6 +5,7 @@
 .module-card:before{content:'';position:absolute;inset:0 0 auto;height:3px;background:var(--green)}.module-card:nth-child(2):before{background:var(--blue)}.module-card:nth-child(3):before{background:var(--orange)}.table-status{font-size:10px;padding:5px 8px;border-radius:20px;background:#e4eef9;color:var(--navy)}.table-status.warn{background:#fff1df;color:#9a6422}.table-status.success{background:#e3f5ea;color:#37815d}
 .nav-subitem{padding-left:42px;font-size:12px}.nav-subitem span{font-size:14px}
 .sidebar{max-height:100vh;overflow-y:auto;scrollbar-width:thin}.main-content{min-height:100vh;overflow-x:hidden}
+.settings-action{width:100%;text-align:left;color:inherit;cursor:pointer;font:inherit}
 .brand-logo{display:block;width:34px;height:34px;object-fit:contain;border-radius:9px}.hero-logo{width:150px;height:150px;border-radius:24px;margin-bottom:42px;filter:drop-shadow(0 0 24px rgba(18,185,233,.35))}.brand-line .brand-logo{width:46px;height:46px;border-radius:12px}.sidebar-head .brand-logo{flex-shrink:0}
 @media(max-width:900px){.sidebar{width:min(86vw,320px);overflow-y:auto;-webkit-overflow-scrolling:touch}.main-content{width:100%;overflow-x:hidden}.topbar{position:sticky;top:0;z-index:2}}
 body{overflow-x:hidden}.app-shell{width:100%;min-width:0}.main-content{width:calc(100% - 256px);min-width:0}.main-content #view-container{max-width:100%;overflow-x:hidden}

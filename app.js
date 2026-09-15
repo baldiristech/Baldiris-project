@@ -178,7 +178,7 @@ function financesMargin() {
   if (!income && !expense) return 0;
   return Math.round(((income - expense) / Math.max(income, 1)) * 100);
 }
-function settingsView() { return simpleModule('Configuración', 'Preferencias y seguridad del espacio central.', [{icon:'⚙',color:'green',title:'Datos de empresa',text:'Identidad, contacto y preferencias de BALDIRIS.'},{icon:'♙',color:'blue',title:'Usuarios y roles',text:'Administra permisos y acceso por negocio.'},{icon:'◇',color:'orange',title:'Seguridad',text:'Sesiones, autenticación y variables de entorno.'}]); }
+function settingsView() { return layout('Configuración', 'Preferencias y seguridad del espacio central.', `<div class="section-list"><button class="module-card settings-action" data-view="clientes"><span class="kpi-icon green">⚙</span><h3>Datos de empresa</h3><p>Identidad, contacto y preferencias de BALDIRIS.</p></button><button class="module-card settings-action" data-view="usuarios"><span class="kpi-icon blue">♙</span><h3>Usuarios y roles</h3><p>Administra permisos y acceso por negocio.</p></button><button class="module-card settings-action" data-action="security-help"><span class="kpi-icon orange">◇</span><h3>Seguridad</h3><p>Sesiones, autenticación y variables de entorno.</p></button></div>`); }
 function readJsonFile(filePath) {
   try {
     return JSON.parse(localStorage.getItem(filePath)) || [];
@@ -434,6 +434,9 @@ document.getElementById('client-modal')?.addEventListener('click', event => { if
 document.getElementById('close-collaborator-modal')?.addEventListener('click', closeCollaboratorModal);
 document.getElementById('cancel-collaborator')?.addEventListener('click', closeCollaboratorModal);
 document.getElementById('collaborator-modal')?.addEventListener('click', event => { if (event.target.id === 'collaborator-modal') closeCollaboratorModal(); });
+document.getElementById('notifications-button')?.addEventListener('click', () => { state.view = 'reportes'; render(); });
+document.getElementById('help-button')?.addEventListener('click', () => window.alert('Usa el menú lateral para abrir módulos. Desde Mis negocios puedes seleccionar K.E. Chicharrón y desde Usuarios y roles gestionar accesos.'));
+document.addEventListener('click', event => { if (event.target.closest('[data-action="security-help"]')) window.alert('La seguridad del panel se configura con las variables de entorno de Render y las credenciales del servicio.'); });
 document.getElementById('logout').addEventListener('click', () => { localStorage.removeItem('baldiris-auth'); localStorage.removeItem('baldiris-user'); state.authenticated = false; document.getElementById('app-shell').classList.add('hidden'); document.getElementById('login-screen').classList.remove('hidden'); });
 document.getElementById('open-sidebar').addEventListener('click', () => document.querySelector('.sidebar').classList.add('open')); document.getElementById('close-sidebar').addEventListener('click', () => document.querySelector('.sidebar').classList.remove('open'));
 if (state.authenticated) showApp();
