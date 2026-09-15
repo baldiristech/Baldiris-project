@@ -10,6 +10,7 @@ const teamFile = path.join(dataDir, 'team.json');
 const movementsFile = path.join(dataDir, 'movements.json');
 const businessesFile = path.join(dataDir, 'businessData.json');
 const usersFile = path.join(dataDir, 'users.json');
+const port = process.env.PORT || 8080;
 const baldirisAdminEmail = (process.env.BALDIRIS_ADMIN_EMAIL || '').trim();
 const baldirisAdminPassword = (process.env.BALDIRIS_ADMIN_PASSWORD || '').trim();
 
@@ -262,6 +263,6 @@ const server = http.createServer((req, res) => {
   sendStatic(res, targetPath, reqUrl);
 });
 
-server.listen(8080, () => {
-  console.log('BALDIRIS static server listening on http://localhost:8080');
+server.listen(port, () => {
+  console.log(`BALDIRIS central server listening on port ${port}`);
 });
