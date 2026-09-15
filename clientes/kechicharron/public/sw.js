@@ -1,4 +1,4 @@
-const cacheName = 'kechicharron-shell-v2';
+const cacheName = 'kechicharron-shell-v3';
 const shell = ['/styles.css', '/app.js', '/manifest.json', '/manifest-kitchen.json', '/manifest-reports.json', '/incono.jpg'];
 
 self.addEventListener('install', event => {
