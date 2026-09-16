@@ -126,14 +126,25 @@ async function databaseRequest(options = {}) {
       ...(options.headers || {})
     }
   });
-  if (!response.ok) throw new Error(`Supabase respondió ${response.status}: ${await response.text()}`);
-  return response.status === 204 ? null : response.json();
+  if (response.status === 204) return null;
+  const responseText = await response.text();
+  if (!response.ok) throw new Error(`Supabase respondió ${response.status}: ${responseText.slice(0, 300)}`);
+  try {
+    return JSON.parse(responseText);
+  } catch {
+    throw new Error(`Supabase no devolvió JSON. Revisa SUPABASE_URL en Render; debe ser la URL del proyecto, por ejemplo https://tu-proyecto.supabase.co. Respuesta: ${responseText.slice(0, 120)}`);
+  }
 }
 
 async function getOrders() {
   if (!supabaseOrdersUrl || !supabaseKey) return readOrders();
-  const rows = await databaseRequest({ method: 'GET', requestUrl: `${supabaseOrdersUrl}?select=*&order=created_at.desc` });
-  return rows.map(fromDatabase);
+  try {
+    const rows = await databaseRequest({ method: 'GET', requestUrl: `${supabaseOrdersUrl}?select=*&order=created_at.desc` });
+    return rows.map(fromDatabase);
+  } catch (error) {
+    console.error('No se pudieron consultar los pedidos en Supabase; usando respaldo local:', error.message);
+    return readOrders();
+  }
 }
 
 async function getMenu() {
@@ -215,8 +226,16 @@ async function createOrder(order) {
     saveOrders(orders);
     return order;
   }
-  const rows = await databaseRequest({ method: 'POST', headers: { Prefer: 'return=representation' }, body: JSON.stringify(toDatabase(order)) });
-  return fromDatabase(rows[0]);
+  try {
+    const rows = await databaseRequest({ method: 'POST', headers: { Prefer: 'return=representation' }, body: JSON.stringify(toDatabase(order)) });
+    return fromDatabase(rows[0]);
+  } catch (error) {
+    console.error('No se pudo guardar el pedido en Supabase; usando respaldo local:', error.message);
+    const orders = readOrders();
+    orders.unshift(order);
+    saveOrders(orders);
+    return order;
+  }
 }
 
 async function updateOrderStatus(id, status, readyAt) {
