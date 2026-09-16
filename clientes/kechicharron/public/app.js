@@ -261,13 +261,17 @@ async function updateStatus(id, status) {
     cancelled: 'Pedido cancelado',
     pending: 'Pedido devuelto a pendientes'
   };
-  const response = await fetch(`/api/orders/${id}/status`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status }) });
-  if (response.ok) {
-    toast(messageMap[status] || 'Estado actualizado');
-    loadOrders();
-  } else {
-    const error = await response.json().catch(() => ({}));
-    toast(error.error || 'No se pudo actualizar el pedido');
+  try {
+    const response = await fetch(`/api/orders/${id}/status`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status }) });
+    if (response.ok) {
+      toast(messageMap[status] || 'Estado actualizado');
+      loadOrders();
+    } else {
+      const error = await response.json().catch(() => ({}));
+      toast(error.error || 'No se pudo actualizar el pedido');
+    }
+  } catch {
+    toast('No hay conexión con el servidor. Intenta de nuevo.');
   }
 }
 async function loadKitchenState() {
