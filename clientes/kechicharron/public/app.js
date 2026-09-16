@@ -327,6 +327,7 @@ function initReports() {
   const monthInput = document.getElementById('report-month');
   const now = new Date();
   monthInput.value = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+  ensureDashboardFormFields(monthInput.value);
   monthInput.addEventListener('change', loadReport);
   document.querySelectorAll('.admin-tab').forEach(tab => tab.addEventListener('click', () => {
     document.querySelectorAll('.admin-tab').forEach(item => item.classList.toggle('active', item === tab));
@@ -343,6 +344,19 @@ function initReports() {
   setInterval(loadReport, 10000);
   loadPqrs();
   setInterval(loadPqrs, 10000);
+}
+
+function ensureDashboardFormFields(defaultMonth) {
+  const inventoryForm = document.getElementById('inventory-form');
+  const expenseForm = document.getElementById('expense-form');
+  if (inventoryForm && !document.getElementById('inventory-id')) {
+    inventoryForm.insertAdjacentHTML('afterbegin', '<input type="hidden" id="inventory-id">');
+  }
+  if (expenseForm && !document.getElementById('expense-id')) {
+    expenseForm.insertAdjacentHTML('afterbegin', '<input type="hidden" id="expense-id">');
+  }
+  const expenseMonth = document.getElementById('expense-month');
+  if (expenseMonth && !expenseMonth.value) expenseMonth.value = defaultMonth;
 }
 
 function ensureDashboardOperationalUI() {
@@ -550,8 +564,16 @@ async function saveInventory(event) {
     unitCost: Number(document.getElementById('inventory-unit-cost').value || 0)
   };
   if (!payload.name || !payload.unit || payload.stock < 0 || payload.unitCost < 0) return toast('Completa nombre, unidad, stock y costo unitario');
-  const response = await fetch(inventoryId ? `/api/inventory/${inventoryId}` : '/api/inventory', { method: inventoryId ? 'PATCH' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-  if (!response.ok) return toast('No se pudo guardar el inventario');
+  let response;
+  try {
+    response = await fetch(inventoryId ? `/api/inventory/${inventoryId}` : '/api/inventory', { method: inventoryId ? 'PATCH' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+  } catch {
+    return toast('No hay conexión con el servidor. Intenta de nuevo.');
+  }
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    return toast(error.error || 'No se pudo guardar el inventario');
+  }
   document.getElementById('inventory-form').reset();
   document.getElementById('inventory-id').value = '';
   loadReport();
@@ -567,8 +589,16 @@ async function saveExpense(event) {
     amount: Number(document.getElementById('expense-amount').value || 0)
   };
   if (!payload.concept || !payload.category || !payload.month || payload.amount < 0) return toast('Completa concepto, categoría, mes y monto');
-  const response = await fetch(expenseId ? `/api/expenses/${expenseId}` : '/api/expenses', { method: expenseId ? 'PATCH' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-  if (!response.ok) return toast('No se pudo guardar el gasto');
+  let response;
+  try {
+    response = await fetch(expenseId ? `/api/expenses/${expenseId}` : '/api/expenses', { method: expenseId ? 'PATCH' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+  } catch {
+    return toast('No hay conexión con el servidor. Intenta de nuevo.');
+  }
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    return toast(error.error || 'No se pudo guardar el gasto');
+  }
   document.getElementById('expense-form').reset();
   document.getElementById('expense-id').value = '';
   loadReport();
