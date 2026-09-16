@@ -248,13 +248,24 @@ async function updateOrderStatus(id, status, readyAt) {
     saveOrders(orders);
     return order;
   }
-  const rows = await databaseRequest({
-    method: 'PATCH',
-    requestUrl: `${supabaseOrdersUrl}?id=eq.${encodeURIComponent(id)}`,
-    headers: { Prefer: 'return=representation' },
-    body: JSON.stringify({ status, ready_at: readyAt })
-  });
-  return rows[0] ? fromDatabase(rows[0]) : null;
+  try {
+    const rows = await databaseRequest({
+      method: 'PATCH',
+      requestUrl: `${supabaseOrdersUrl}?id=eq.${encodeURIComponent(id)}`,
+      headers: { Prefer: 'return=representation' },
+      body: JSON.stringify({ status, ready_at: readyAt })
+    });
+    return rows[0] ? fromDatabase(rows[0]) : null;
+  } catch (error) {
+    console.error('No se pudo actualizar el pedido en Supabase; usando respaldo local:', error.message);
+    const orders = readOrders();
+    const order = orders.find(item => item.id === id);
+    if (!order) return null;
+    order.status = status;
+    order.readyAt = readyAt;
+    saveOrders(orders);
+    return order;
+  }
 }
 
 async function deleteOrder(id) {
@@ -265,11 +276,20 @@ async function deleteOrder(id) {
     saveOrders(remaining);
     return true;
   }
-  await databaseRequest({
-    method: 'DELETE',
-    requestUrl: `${supabaseOrdersUrl}?id=eq.${encodeURIComponent(id)}`
-  });
-  return true;
+  try {
+    await databaseRequest({
+      method: 'DELETE',
+      requestUrl: `${supabaseOrdersUrl}?id=eq.${encodeURIComponent(id)}`
+    });
+    return true;
+  } catch (error) {
+    console.error('No se pudo eliminar el pedido en Supabase; usando respaldo local:', error.message);
+    const orders = readOrders();
+    const remaining = orders.filter(item => item.id !== id);
+    if (remaining.length === orders.length) return false;
+    saveOrders(remaining);
+    return true;
+  }
 }
 
 function getMonthFromQuery(reqUrl) {
